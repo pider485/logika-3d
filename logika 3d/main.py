@@ -13,7 +13,9 @@ from models import Block , WorldEdit
 
 
 player = FirstPersonController()
-
+player.x= chunk_size /2
+player.z= chunk_size /2
+player.y = 20
 # picaxe = Entity(color=color.gray,scale=2, texture='grass' ,collider='box')
 
 Sky = Sky()
@@ -23,7 +25,7 @@ Sky = Sky()
 world = WorldEdit()
 world.generate_world()
 
-scene.fog_density = (7, 10)   # sets linear density start and end
+# scene.fog_density = (7, 10)   # sets linear density start and end
 
 camera.clip_plane_far = 30
 

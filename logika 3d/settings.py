@@ -2,7 +2,8 @@
 from ursina import load_texture
 import os
 
-map_size=50
+chunk_size=10
+world_size=5
 
 block_textures = []
 BASE_DIR= os.getcwd()
