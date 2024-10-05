@@ -15,18 +15,20 @@ from models import Block , WorldEdit
 player = FirstPersonController()
 player.x= chunk_size /2
 player.z= chunk_size /2
-player.y = 20
+player.gravity = 0
+def input(key):
+    player.gravity = 0.5
 # picaxe = Entity(color=color.gray,scale=2, texture='grass' ,collider='box')
 
 Sky = Sky()
-# light=DirectionalLight(shadows=True)
-# light.look_at(Vec3(1,-2,1))
+light=DirectionalLight(shadows=True)
+light.look_at(Vec3(1,-2,1))
 
-world = WorldEdit()
+world = WorldEdit(player)
 world.generate_world()
 
 # scene.fog_density = (7, 10)   # sets linear density start and end
 
-camera.clip_plane_far = 30
+# camera.clip_plane_far = 30
 
 app.run()
