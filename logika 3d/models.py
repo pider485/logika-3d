@@ -5,6 +5,7 @@ from ursina.shaders import basic_lighting_shader, lit_with_shadows_shader
 from perlin_noise import PerlinNoise
 from random import randint
 import pickle
+from ui import Menu
 
 # player = FirstPersonController()
 
@@ -100,6 +101,7 @@ class WorldEdit(Entity):
         self.player = player
 
     def generate_world(self):
+        self.clear_wrold()
         for z in range(world_size):
             for x in range(world_size):
                 chunk_pos = (x,z)
@@ -109,6 +111,7 @@ class WorldEdit(Entity):
                 # rand_num=randint(0,100)
                 # if rand_num == 52:
                 #     tree = Tree((z-(chunk_size/2)-0.5,y-3,x-(chunk_size/2)-0.5), self)
+        self.Menu.toggle_menu()
     def save_game(self):
         game_data = {
             "player_pos":(self.player.x, self.player.y, self.player.z),
@@ -118,7 +121,7 @@ class WorldEdit(Entity):
         }
         for chunk_pos, chunk in self.chunks.items():
             blocks_data = []
-            for block_pos, block in chunk.block.items():
+            for block_pos, block in chunk.blocks.items():
                 blocks_data.append((block_pos,block.id))
             game_data["chunks"].append((chunk_pos, blocks_data))
 
@@ -126,6 +129,7 @@ class WorldEdit(Entity):
             game_data['trees'].append((tree_pos))
         with open('save.dat', 'wb')as file:
             pickle.dump(game_data, file)
+        self.menu.toggle_menu()
     def clear_wrold(self):
         for chunk in self.chunks.values():
             for block in chunk.blocks.values():
@@ -150,8 +154,11 @@ class WorldEdit(Entity):
             self.clear_wrold()
             self.load_world(game_data['chunks'],game_data['trees'])
             self.player.x, self.player.y, self.player.z = game_data['player_pos']
+        self.Menu.toggle_menu()
   
     def input(self, key):
+        if key == 'escape':
+            self.toggle_menu()
         if key == 'k':
             self.save_game()
             print("гру збережено")

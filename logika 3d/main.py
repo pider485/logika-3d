@@ -10,7 +10,7 @@ app = Ursina()
 
 from settings import *
 from models import Block , WorldEdit
-
+from ui import Menu
 
 player = FirstPersonController()
 player.x= chunk_size /2
@@ -25,8 +25,11 @@ light=DirectionalLight(shadows=True)
 light.look_at(Vec3(1,-2,1))
 
 world = WorldEdit(player)
+menu=Menu(world)
+menu.toggle_menu()
 world.generate_world()
-
+mouse.locked = False
+mouse.visible =True
 # scene.fog_density = (7, 10)   # sets linear density start and end
 
 # camera.clip_plane_far = 30
